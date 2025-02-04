@@ -5,11 +5,16 @@ import ContactsUI
 public class FlutterNativeContactPickerPlugin: NSObject, FlutterPlugin {
   var _delegate: PickerHandler?;
 
-  public static func register(with registrar: FlutterPluginRegistrar) {
+  public static func register(with registrar: FlutterPluginRegistrar?) {
+    guard let registrar = registrar else {
+        print("Registrar is nil")
+        return
+    }
     let channel = FlutterMethodChannel(name: "flutter_native_contact_picker", binaryMessenger: registrar.messenger())
     let instance = FlutterNativeContactPickerPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
-  }
+}
+
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     if("selectContact" == call.method || "selectContacts" == call.method || "selectPhoneNumber" == call.method) {
